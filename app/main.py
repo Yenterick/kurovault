@@ -4,13 +4,17 @@ from app.api.v1.router import api_router
 from dotenv import load_dotenv
 from contextlib import asynccontextmanager
 from app.core.pg_connection import engine
+from app.core.redis_connection import redis_client, redis_pool
 
 load_dotenv()
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    await redis_client.ping()
     yield
+    await redis_client.aclose()
+    await redis_pool.disconnect()
     await engine.dispose()
 
 

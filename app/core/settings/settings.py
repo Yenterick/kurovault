@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
     DATABASE_URL: str
+    REDIS_URL: str = "redis://localhost:6379/0"
 
 
 settings = Settings()
